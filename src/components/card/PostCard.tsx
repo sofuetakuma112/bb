@@ -27,7 +27,7 @@ type PromptDialogProps = {
   pageType?: "likes" | "posts";
   hashTags?: string[];
   prompt?: string;
-  isDisplayPost: boolean;
+  isUnderReviewPost: boolean;
 };
 
 function PromptDialog({
@@ -35,13 +35,13 @@ function PromptDialog({
   analysisResult,
   hashTags,
   prompt,
-  isDisplayPost,
+  isUnderReviewPost,
 }: PromptDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
         <button className="block size-full">
-          <div className="overflow-hidden rounded-2xl h-full">
+          <div className="h-full overflow-hidden rounded-2xl">
             <img
               src={imageUrl}
               alt="AI画像"
@@ -49,11 +49,11 @@ function PromptDialog({
             />
           </div>
           <div
-            className={clsx({
+            className={clsx("h-full overflow-hidden rounded-2xl", {
               "absolute inset-0 flex items-center justify-center bg-gray-600":
-                isDisplayPost,
+                isUnderReviewPost,
               "absolute inset-0 flex items-center justify-center bg-gray-600 bg-opacity-80":
-                analysisResult == null && !isDisplayPost,
+                analysisResult == null && !isUnderReviewPost,
             })}
           >
             <span className="text-xl text-white-white">審査中</span>
@@ -68,7 +68,7 @@ function PromptDialog({
           {hashTags?.map((hashTag, i) => (
             <Badge
               key={`${imageUrl}-${hashTag}-${i}`}
-              className={clsx("mr-1", { hidden: isDisplayPost })}
+              className={clsx("mr-1", { hidden: isUnderReviewPost })}
             >
               {hashTag}
             </Badge>
@@ -77,7 +77,7 @@ function PromptDialog({
         <DialogHeader>
           <DialogTitle>プロンプト</DialogTitle>
         </DialogHeader>
-        <DialogDescription className={clsx({ hidden: isDisplayPost })}>
+        <DialogDescription className={clsx({ hidden: isUnderReviewPost })}>
           {prompt}
         </DialogDescription>
       </DialogContent>
@@ -148,7 +148,7 @@ function PostCard({
   hashTags,
   prompt,
 }: Props) {
-  const isDisplayPost = currentUserId !== userId && analysisResult === null;
+  const isUnderReviewPost = currentUserId !== userId && analysisResult === null;
   return (
     <Card
       variant="list"
@@ -157,12 +157,7 @@ function PostCard({
         hidden: analysisResult === false,
       })}
     >
-      <div
-        className={clsx("relative h-[270px] pb-1", {
-          "rounded-t-2xl": isDisplayPost,
-          "rounded-2xl": !isDisplayPost,
-        })}
-      >
+      <div className={clsx("relative h-[270px] pb-1")}>
         <PromptDialog
           imageUrl={imageUrl}
           analysisResult={analysisResult}
@@ -172,7 +167,7 @@ function PostCard({
           pageType={pageType}
           hashTags={hashTags}
           prompt={prompt}
-          isDisplayPost={isDisplayPost}
+          isUnderReviewPost={isUnderReviewPost}
         />
         {currentUserId === userId && pageType === "posts" && postId && (
           <DeletePostDialog postId={postId} userId={userId} />
@@ -181,11 +176,7 @@ function PostCard({
           <RemoveLikeButton userId={userId} postId={postId} />
         )}
       </div>
-      <p
-        className={clsx("pb-1 text-lg font-semibold", {
-          "rounded-b-2xl bg-gray-600 text-gray-600": isDisplayPost,
-        })}
-      >
+      <p className={clsx("pb-1 text-lg font-semibold")}>
         {imageName}
       </p>
       <div className="flex">
