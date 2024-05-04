@@ -13,11 +13,11 @@ import { redirect } from "next/navigation";
 import { getImageUrlFromS3 } from "@/features/s3";
 
 /**
- * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
- * object and keep type safety.
- *
- * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
- */
+* next-authの型に対するモジュール拡張です。これにより、sessionオブジェクトにカスタムプロパティを
+* 追加し、型の安全性を維持することができます。
+
+* @see https://next-auth.js.org/getting-started/typescript#module-augmentation
+*/
 declare module "next-auth" {
   interface User {
     imageS3Key: string;
@@ -39,7 +39,7 @@ declare module "next-auth" {
 }
 
 /**
- * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
+ * NextAuth.jsのオプションで、アダプタ、プロバイダ、コールバックなどを設定します。
  *
  * @see https://next-auth.js.org/configuration/options
  */
@@ -66,23 +66,24 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
     /**
-     * ...add more providers here.
+     * ...ここに他のプロバイダーを追加する。
      *
-     * Most other providers require a bit more work than the Discord provider. For example, the
-     * GitHub provider requires you to add the `refresh_token_expires_in` field to the Account
-     * model. Refer to the NextAuth.js docs for the provider you want to use. Example:
+     * 他のほとんどのプロバイダーは、Discordプロバイダーよりも少し手間がかかる。
+     * たとえば GitHub プロバイダでは、
+     * Account モデルに `refresh_token_expires_in` フィールドを追加する必要があります。
+     * 使いたいプロバイダのNextAuth.jsドキュメントを参照してください。例:
      *
      * @see https://next-auth.js.org/providers/github
      */
   ],
   secret: process.env.NEXTAUTH_SECRET!,
   pages: {
-    signIn: '/login',
-  }
+    signIn: "/login",
+  },
 };
 
 /**
- * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
+ * getServerSession` のラッパーのため、ファイルごとに `authOptions` をインポートする必要がない。
  *
  * @see https://next-auth.js.org/configuration/nextjs
  */
