@@ -1,12 +1,12 @@
-'use client';
-import clsx from 'clsx';
-import Link from 'next/link';
-import React from 'react';
-import RemoveLikeButton from '@/app/(authenticated)/[userId]/likes/removeLikeButton';
-import { deletePost } from '@/features/actions/post';
-import { Badge } from '@/features/ui/badge';
-import { Button } from '@/features/ui/button';
-import { Card } from '@/features/ui/card';
+"use client";
+import clsx from "clsx";
+import Link from "next/link";
+import React from "react";
+import RemoveLikeButton from "@/app/(authenticated)/[userId]/likes/removeLikeButton";
+import { deletePost } from "@/features/actions/post";
+import { Badge } from "@/features/ui/badge";
+import { Button } from "@/features/ui/button";
+import { Card } from "@/features/ui/card";
 import {
   Dialog,
   DialogClose,
@@ -15,8 +15,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/features/ui/dialog';
-import { Icon } from '@/features/ui/icon';
+} from "@/features/ui/dialog";
+import { Icon } from "@/features/ui/icon";
 
 type PromptDialogProps = {
   imageUrl: string;
@@ -24,7 +24,7 @@ type PromptDialogProps = {
   currentUserId?: string;
   userId: string;
   postId?: string;
-  pageType?: 'likes' | 'posts';
+  pageType?: "likes" | "posts";
   hashTags?: string[];
   prompt?: string;
   isDisplayPost: boolean;
@@ -39,17 +39,26 @@ function PromptDialog({
 }: PromptDialogProps) {
   return (
     <Dialog>
-      <DialogTrigger className="flex w-full justify-center">
-        <img src={imageUrl} alt="AI画像" className={clsx('size-full object-cover')} />
-        <div
-          className={clsx({
-            'absolute inset-0 flex items-center justify-center bg-gray-600': isDisplayPost,
-            'absolute inset-0 flex items-center justify-center bg-gray-600 bg-opacity-80':
-              analysisResult == null && !isDisplayPost,
-          })}
-        >
-          <span className="text-xl text-white-white">審査中</span>
-        </div>
+      <DialogTrigger asChild>
+        <button className="block size-full">
+          <div className="overflow-hidden rounded-2xl h-full">
+            <img
+              src={imageUrl}
+              alt="AI画像"
+              className={clsx("size-full object-cover")}
+            />
+          </div>
+          <div
+            className={clsx({
+              "absolute inset-0 flex items-center justify-center bg-gray-600":
+                isDisplayPost,
+              "absolute inset-0 flex items-center justify-center bg-gray-600 bg-opacity-80":
+                analysisResult == null && !isDisplayPost,
+            })}
+          >
+            <span className="text-xl text-white-white">審査中</span>
+          </div>
+        </button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -59,7 +68,7 @@ function PromptDialog({
           {hashTags?.map((hashTag, i) => (
             <Badge
               key={`${imageUrl}-${hashTag}-${i}`}
-              className={clsx('mr-1', { hidden: isDisplayPost })}
+              className={clsx("mr-1", { hidden: isDisplayPost })}
             >
               {hashTag}
             </Badge>
@@ -68,7 +77,9 @@ function PromptDialog({
         <DialogHeader>
           <DialogTitle>プロンプト</DialogTitle>
         </DialogHeader>
-        <DialogDescription className={clsx({ hidden: isDisplayPost })}>{prompt}</DialogDescription>
+        <DialogDescription className={clsx({ hidden: isDisplayPost })}>
+          {prompt}
+        </DialogDescription>
       </DialogContent>
     </Dialog>
   );
@@ -110,7 +121,7 @@ function DeletePostDialog({ postId, userId }: DeletePostDialogProps) {
 }
 
 type Props = {
-  pageType?: 'likes' | 'posts';
+  pageType?: "likes" | "posts";
   imageUrl: string;
   imageName: string;
   profileUrl: string;
@@ -133,7 +144,7 @@ function PostCard({
   userName,
   postId,
   analysisResult,
-  pageType = 'posts',
+  pageType = "posts",
   hashTags,
   prompt,
 }: Props) {
@@ -142,12 +153,14 @@ function PostCard({
     <Card
       variant="list"
       color="transparent"
-      className={clsx('mx-auto flex flex-col', { hidden: analysisResult === false })}
+      className={clsx("mx-auto flex flex-col", {
+        hidden: analysisResult === false,
+      })}
     >
       <div
-        className={clsx('relative h-[270px] overflow-hidden pb-1', {
-          'rounded-t-2xl': isDisplayPost,
-          'rounded-2xl': !isDisplayPost,
+        className={clsx("relative h-[270px] pb-1", {
+          "rounded-t-2xl": isDisplayPost,
+          "rounded-2xl": !isDisplayPost,
         })}
       >
         <PromptDialog
@@ -161,14 +174,16 @@ function PostCard({
           prompt={prompt}
           isDisplayPost={isDisplayPost}
         />
-        {currentUserId === userId && pageType === 'posts' && postId && (
+        {currentUserId === userId && pageType === "posts" && postId && (
           <DeletePostDialog postId={postId} userId={userId} />
         )}
-        {pageType === 'likes' && postId && <RemoveLikeButton userId={userId} postId={postId} />}
+        {pageType === "likes" && postId && (
+          <RemoveLikeButton userId={userId} postId={postId} />
+        )}
       </div>
       <p
-        className={clsx('pb-1 text-lg font-semibold', {
-          'bg-gray-600 text-gray-600 rounded-b-2xl': isDisplayPost,
+        className={clsx("pb-1 text-lg font-semibold", {
+          "rounded-b-2xl bg-gray-600 text-gray-600": isDisplayPost,
         })}
       >
         {imageName}
