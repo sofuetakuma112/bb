@@ -1,4 +1,4 @@
-# [T3 Stack](https://create.t3.gg/)を作成する
+# [T3 Stack](https://create.t3.gg/)について
 これは create-t3-app を用いてブートストラップされた BeauBelle プロジェクトです。
 
 このプロジェクトで使用されている技術
@@ -6,9 +6,11 @@
 - [Next.js](https://nextjs.org)
 - [NextAuth.js](https://next-auth.js.org)
 - [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
 - [Tailwind CSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [Jotai](https://jotai.org/)
+- [zod](https://zod.dev/)
 
 ## もっと学ぶ
 [T3 Stack](https://create.t3.gg/) についてもっと学ぶために、以下のリソースをご覧ください:
