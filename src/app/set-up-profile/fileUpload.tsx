@@ -1,6 +1,14 @@
-import React, { useRef, useState, ChangeEvent, DragEvent } from 'react';
-import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from '@/features/const/validation';
-import { Icon } from '@/features/ui/icon';
+import React, {
+  useRef,
+  useState,
+  type ChangeEvent,
+  type DragEvent,
+} from "react";
+import {
+  ACCEPTED_IMAGE_TYPES,
+  MAX_FILE_SIZE,
+} from "@/features/const/validation";
+import { Icon } from "@/features/ui/icon";
 
 interface FileUploadProps {
   onFileSelect: (file: File, previewUrl: string) => void;
@@ -32,7 +40,12 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFileSelect }) => {
     const files = event.dataTransfer.files;
     if (files.length > 0) {
       const file = files[0];
-      if (ACCEPTED_IMAGE_TYPES.includes(file.type) && file.size <= MAX_FILE_SIZE) {
+      if (!file) return;
+
+      if (
+        ACCEPTED_IMAGE_TYPES.includes(file.type) &&
+        file.size <= MAX_FILE_SIZE
+      ) {
         const reader = new FileReader();
         reader.onload = () => {
           const result = reader.result as string;
@@ -54,9 +67,18 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFileSelect }) => {
       >
         <Icon name="plus" width="32" height="32" />
       </div>
-      <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileSelect} />
+      <input
+        type="file"
+        ref={fileInputRef}
+        className="hidden"
+        onChange={handleFileSelect}
+      />
       {previewUrl && (
-        <img src={previewUrl} alt="Preview" className="m-4 size-28 rounded-md object-cover" />
+        <img
+          src={previewUrl}
+          alt="Preview"
+          className="m-4 size-28 rounded-md object-cover"
+        />
       )}
     </div>
   );
