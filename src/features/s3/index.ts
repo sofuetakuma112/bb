@@ -2,19 +2,19 @@ import "server-only";
 
 import { env } from "@/env";
 
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+// import { S3Client } from "@aws-sdk/client-s3";
 import { supabase } from "@/features/supabase";
 import { createId } from "@paralleldrive/cuid2";
 
-const client = new S3Client({
-  forcePathStyle: true,
-  region: env.SUPABASE_STORAGE_REGION,
-  endpoint: env.SUPABASE_STORAGE_ENDPOINT,
-  credentials: {
-    accessKeyId: env.SUPABASE_STORAGE_ACCESS_KEY_ID,
-    secretAccessKey: env.SUPABASE_STORAGE_ACCESS_SECRET_KEY,
-  },
-});
+// const client = new S3Client({
+//   forcePathStyle: true,
+//   region: env.SUPABASE_STORAGE_REGION,
+//   endpoint: env.SUPABASE_STORAGE_ENDPOINT,
+//   credentials: {
+//     accessKeyId: env.SUPABASE_STORAGE_ACCESS_KEY_ID,
+//     secretAccessKey: env.SUPABASE_STORAGE_ACCESS_SECRET_KEY,
+//   },
+// });
 
 type S3ImageType = "user" | "post";
 
@@ -27,18 +27,21 @@ async function uploadImageToS3(file: File, type: S3ImageType): Promise<string> {
 
   const key = createId();
 
-  const command = new PutObjectCommand({
-    Bucket: bucketName,
-    Key: key,
-    Body: Buffer.from(await file.arrayBuffer()),
-    ContentType: file.type,
-  });
-
   try {
-    await client.send(command);
+    const { error } = await supabase.storage
+      .from(bucketName)
+      .upload(key, file, {
+        contentType: file.type,
+      });
+
+    if (error) {
+      console.error("Error uploading image to Supabase:", error);
+      throw error;
+    }
+
     return `${bucketName}/${key}`;
   } catch (error) {
-    console.error("Error uploading image to S3:", error);
+    console.error("Error uploading image to Supabase:", error);
     throw error;
   }
 }
