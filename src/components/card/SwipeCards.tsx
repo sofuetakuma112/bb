@@ -17,6 +17,23 @@ import { Card } from "@/features/ui/card";
 import { Icon } from "@/features/ui/icon";
 import { api } from "@/trpc/react";
 
+const commonClasses = {
+  profileImage: "size-9 overflow-hidden rounded-lg",
+  userName: "text-base text-black-black",
+  superLikeIcon: "flex items-center",
+  reload: "bg-white-white",
+  scrollButton: "bg-white-white",
+  scrollIcon: "size-[18px] sm:size-[28px]",
+  hashTags: "inline-flex flex-wrap gap-x-3 gap-y-6 pt-9",
+  promptText:
+    "mt-9 rounded-2xl bg-white p-6 text-xl font-semibold text-slate-800",
+};
+
+const buttonVariants = {
+  smOutline: "bg-white-white",
+  lgOutline: "bg-white-white",
+};
+
 type SwipeCardProps = {
   imageUrl: string;
   name: string;
@@ -35,7 +52,7 @@ type SwipeCardProps = {
   handleScroll: (type: "up" | "down") => void;
 };
 
-function SwipeCard({
+function SwipeCardForPC({
   imageUrl,
   name,
   age,
@@ -56,17 +73,17 @@ function SwipeCard({
     <Card
       variant="single"
       color={isSuperLikePost ? "superlike" : "blue"}
-      className="relative flex h-full flex-col sm:max-h-[785px]"
+      className="relative h-full flex-col sm:max-h-[785px] hidden sm:flex"
     >
+      {/* User profile */}
       <div
-        className={clsx("absolute left-4 top-4 z-10 flex sm:left-8 sm:top-6", {
+        className={clsx("absolute left-8 top-6 z-10 hidden sm:flex", {
           block: currentScrollIndex === 0,
           hidden: currentScrollIndex > 0,
         })}
       >
         <Link href={`/${userId}/home`}>
           <div className="mr-1 size-9 overflow-hidden rounded-lg">
-            {/* TODO: Imageコンポーネントに置き換える */}
             <img
               src={profileUrl}
               alt="ユーザープロフィール画像"
@@ -76,15 +93,15 @@ function SwipeCard({
         </Link>
         <div className="flex items-center">
           <Link href={`/${userId}/home`}>
-            <span className="text-base text-white sm:text-black-black">
-              {userName}
-            </span>
+            <span className={commonClasses.userName}>{userName}</span>
           </Link>
         </div>
       </div>
+
+      {/* Superlike badge */}
       <div
         className={clsx(
-          "absolute left-4 top-14 z-10 sm:left-1/2 sm:top-6 sm:-translate-x-1/2",
+          "absolute left-1/2 top-6 z-10 hidden -translate-x-1/2 sm:block",
           {
             block: currentScrollIndex === 0,
             hidden: currentScrollIndex > 0,
@@ -92,7 +109,7 @@ function SwipeCard({
         )}
       >
         {isSuperLikePost && (
-          <div className="flex items-center">
+          <div className={commonClasses.superLikeIcon}>
             <Icon name="super-like" width="32" height="32" />
             <span className="pl-2 text-sm font-bold text-blue-300">
               superlikeされた投稿です！！
@@ -100,20 +117,27 @@ function SwipeCard({
           </div>
         )}
       </div>
+
+      {/* Reload button */}
       <div
-        className={clsx("absolute right-2 top-2 z-10 sm:right-8 sm:top-6", {
-          block: currentScrollIndex === 0,
-          hidden: currentScrollIndex > 0,
-        })}
+        className={clsx(
+          "absolute right-2 top-2 z-10 hidden sm:right-8 sm:top-6 sm:block",
+          {
+            block: currentScrollIndex === 0,
+            hidden: currentScrollIndex > 0,
+          },
+        )}
       >
         <Button
           variant="smOutline"
-          className="bg-white-white"
+          className={commonClasses.reload}
           onClick={handleReload}
         >
           <Icon name="reload" width="32" height="32" />
         </Button>
       </div>
+
+      {/* Scroll up button */}
       <div
         className={clsx(
           "absolute left-1/2 top-[10%] z-10 hidden -translate-x-1/2 sm:block",
@@ -124,15 +148,17 @@ function SwipeCard({
       >
         <Button
           variant="ghost"
-          className="bg-white-white"
+          className={commonClasses.scrollButton}
           onClick={() => handleScroll("up")}
         >
           <Icon
             name="arrow-down"
-            className="size-[18px] rotate-180 sm:size-[28px]"
+            className={`${commonClasses.scrollIcon} rotate-180`}
           />
         </Button>
       </div>
+
+      {/* Scroll down button */}
       <div
         className={clsx(
           "absolute bottom-[15%] left-1/2 z-10 hidden -translate-x-1/2 sm:block",
@@ -143,15 +169,15 @@ function SwipeCard({
       >
         <Button
           variant="ghost"
-          className="bg-white-white"
+          className={commonClasses.scrollButton}
           onClick={() => handleScroll("down")}
         >
-          <Icon name="arrow-down" className="size-[18px] sm:size-[28px]" />
+          <Icon name="arrow-down" className={commonClasses.scrollIcon} />
         </Button>
       </div>
-      {/* PC */}
+
+      {/* Image and user info */}
       <div className="hidden h-full overflow-y-hidden rounded-3xl sm:block">
-        {/* 1 */}
         <div
           className={clsx("flex h-full transition-transform duration-500", {
             "translate-y-0": currentScrollIndex === 0,
@@ -160,7 +186,6 @@ function SwipeCard({
           })}
         >
           <div className="flex-1">
-            {/* TODO: Imageコンポーネントに置き換える */}
             <img
               src={imageUrl}
               alt="AI画像"
@@ -174,7 +199,8 @@ function SwipeCard({
             </div>
           </div>
         </div>
-        {/* 2 */}
+
+        {/* Hashtags */}
         <div
           className={clsx(
             "flex h-full flex-col items-center justify-center px-8 transition-transform duration-500 xl:px-32",
@@ -185,13 +211,14 @@ function SwipeCard({
           )}
         >
           <p className="text-center text-2xl font-bold">ハッシュタグ</p>
-          <div className="inline-flex flex-wrap gap-x-3 gap-y-6 pt-9">
+          <div className={commonClasses.hashTags}>
             {hashTags.map((hashTag, i) => (
               <Badge key={`${imageUrl}-${hashTag}-${i}`}>{hashTag}</Badge>
             ))}
           </div>
         </div>
-        {/* 3 */}
+
+        {/* Prompt */}
         <div
           className={clsx(
             "flex h-full flex-col items-center justify-center px-8 transition-transform duration-500 xl:px-32",
@@ -202,98 +229,176 @@ function SwipeCard({
           )}
         >
           <p className="text-center text-2xl font-bold">プロンプト</p>
-          <p className="mt-9 rounded-2xl bg-white p-6 text-xl font-semibold text-slate-800">
-            {prompt}
-          </p>
+          <p className={commonClasses.promptText}>{prompt}</p>
         </div>
       </div>
-      {/* SP */}
-      <div className="scrollbar-hide block h-full overflow-y-scroll rounded-3xl sm:hidden">
-        {/* 1 */}
-        <div className="relative flex h-full">
-          <div className="flex-1">
-            {/* TODO: Imageコンポーネントに置き換える */}
-            <img
-              src={imageUrl}
-              alt="AI画像"
-              className="size-full object-cover"
-            />
-          </div>
-          <div className="absolute bottom-4 left-4">
-            <span className="pr-4 text-2xl font-semibold text-white">
-              {name}
-            </span>
-            <span className="text-xl font-semibold text-white">{age}</span>
-          </div>
-        </div>
-        {/* 2 */}
-        <div
-          className={clsx(
-            "flex h-full flex-col items-center justify-center px-8",
-          )}
-        >
-          <p className="text-center text-2xl font-bold">ハッシュタグ</p>
-          <div className="inline-flex flex-wrap gap-x-3 gap-y-6 pt-9">
-            {hashTags.map((hashTag, i) => (
-              <Badge key={`${imageUrl}-${hashTag}-${i}`}>{hashTag}</Badge>
-            ))}
-          </div>
-        </div>
-        {/* 3 */}
-        <div className={clsx("flex h-full flex-col items-center px-8 pt-8")}>
-          <p className="text-center text-2xl font-bold">プロンプト</p>
-          <p className="mt-9 rounded-2xl bg-white p-6 text-xl font-semibold text-slate-800">
-            {prompt}
-          </p>
-        </div>
-      </div>
-      {/* PC */}
+
+      {/* Action buttons */}
       <div className="absolute -bottom-8 left-1/2 hidden -translate-x-1/2 gap-x-16 sm:-bottom-12 sm:flex">
         <Button
           variant="lgOutline"
-          className="bg-white-white"
+          className={buttonVariants.lgOutline}
           onClick={handleNope}
         >
           <Icon name="nope" className="size-8 sm:size-16" />
         </Button>
         <Button
           variant="lgOutline"
-          className="bg-white-white"
+          className={buttonVariants.lgOutline}
           onClick={handleSuperLike}
         >
           <Icon name="super-like" className="size-8 sm:size-16" />
         </Button>
         <Button
           variant="lgOutline"
-          className="bg-white-white"
+          className={buttonVariants.lgOutline}
           onClick={handleLike}
         >
           <Icon name="like" className="size-8 sm:size-16" />
         </Button>
       </div>
-      {/* SP */}
-      <div className="absolute bottom-2 right-2 flex gap-x-2 sm:hidden">
-        <Button
-          variant="smOutline"
-          className="bg-white-white"
-          onClick={handleNope}
-        >
-          <Icon name="nope" className="size-6" />
-        </Button>
-        <Button
-          variant="smOutline"
-          className="bg-white-white"
-          onClick={handleSuperLike}
-        >
-          <Icon name="super-like" className="size-6" />
-        </Button>
-        <Button
-          variant="smOutline"
-          className="bg-white-white"
-          onClick={handleLike}
-        >
-          <Icon name="like" className="size-6" />
-        </Button>
+    </Card>
+  );
+}
+
+function SwipeCardForSP({
+  imageUrl,
+  name,
+  age,
+  profileUrl,
+  userName,
+  userId,
+  hashTags,
+  prompt,
+  isSuperLikePost,
+  currentScrollIndex,
+  handleLike,
+  handleSuperLike,
+  handleNope,
+  handleReload,
+}: Omit<SwipeCardProps, "handleScroll">) {
+  return (
+    <Card
+      variant="single"
+      color={isSuperLikePost ? "superlike" : "blue"}
+      className="relative flex h-full flex-col sm:max-h-[785px] sm:hidden"
+    >
+      {/* Image and user info */}
+      <div className="scrollbar-hide h-full overflow-y-scroll rounded-3xl">
+        <div className="relative flex h-full">
+          <div className="flex-1">
+            <img
+              src={imageUrl}
+              alt="AI画像"
+              className="size-full object-cover"
+            />
+          </div>
+          <div className="absolute bottom-4 left-4 sm:hidden">
+            <span className="pr-4 text-2xl font-semibold text-white">
+              {name}
+            </span>
+            <span className="text-xl font-semibold text-white">{age}</span>
+          </div>
+
+          {/* User profile */}
+          <div
+            className={clsx("absolute left-4 top-4 z-10 flex", {
+              block: currentScrollIndex === 0,
+              hidden: currentScrollIndex > 0,
+            })}
+          >
+            <Link href={`/${userId}/home`}>
+              <div className={commonClasses.profileImage}>
+                <img
+                  src={profileUrl}
+                  alt="ユーザープロフィール画像"
+                  className="size-full object-cover"
+                />
+              </div>
+            </Link>
+            <div className="flex items-center">
+              <Link href={`/${userId}/home`}>
+                <span className="text-base text-white">{userName}</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Action buttons */}
+          <div className="absolute bottom-2 right-2 flex gap-x-2 sm:hidden">
+            <Button
+              variant="smOutline"
+              className={buttonVariants.smOutline}
+              onClick={handleNope}
+            >
+              <Icon name="nope" className="size-6" />
+            </Button>
+            <Button
+              variant="smOutline"
+              className={buttonVariants.smOutline}
+              onClick={handleSuperLike}
+            >
+              <Icon name="super-like" className="size-6" />
+            </Button>
+            <Button
+              variant="smOutline"
+              className={buttonVariants.smOutline}
+              onClick={handleLike}
+            >
+              <Icon name="like" className="size-6" />
+            </Button>
+          </div>
+
+          {/* Superlike badge */}
+          <div
+            className={clsx("absolute left-4 top-14 z-10 sm:hidden", {
+              block: currentScrollIndex === 0,
+              hidden: currentScrollIndex > 0,
+            })}
+          >
+            {isSuperLikePost && (
+              <div className={commonClasses.superLikeIcon}>
+                <Icon name="super-like" width="32" height="32" />
+                <span className="pl-2 text-sm font-bold text-blue-300">
+                  superlikeされた投稿です！！
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Reload button */}
+          <div
+            className={clsx("absolute right-2 top-2 z-10 sm:hidden", {
+              block: currentScrollIndex === 0,
+              hidden: currentScrollIndex > 0,
+            })}
+          >
+            <Button
+              variant="smOutline"
+              className={commonClasses.reload}
+              onClick={handleReload}
+            >
+              <Icon name="reload" width="32" height="32" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Hashtags */}
+        <div className="flex h-full flex-col items-center justify-center px-8">
+          <p className="text-center text-2xl font-bold">ハッシュタグ</p>
+          <div className={commonClasses.hashTags}>
+            {hashTags.map((hashTag, i) => (
+              <Badge key={`${imageUrl}-${hashTag}-${i}`}>{hashTag}</Badge>
+            ))}
+          </div>
+        </div>
+
+        {/* Prompt */}
+        <div className="flex h-full flex-col items-center px-2 pt-4 sm:px-8 sm:pt-8">
+          <p className="text-center text-2xl font-bold">プロンプト</p>
+          <p className="mt-9 rounded-2xl bg-white p-6 text-base font-semibold text-slate-800 sm:text-xl">
+            {prompt}
+          </p>
+        </div>
       </div>
     </Card>
   );
@@ -434,23 +539,41 @@ function SwipeCards({ tabValue, type }: SwipeCardsProps) {
   return posts.length === 0 ? (
     <NoCard />
   ) : (
-    <SwipeCard
-      imageUrl={currentPost.imageUrl ?? ""}
-      name={currentPost.imageName}
-      age={Number(currentPost.imageAge)}
-      profileUrl={currentPost.user.imageUrl ?? ""}
-      userName={currentPost.user.name ?? ""}
-      userId={currentPost.user.id}
-      hashTags={currentPost.hashTags as string[]}
-      prompt={currentPost.prompt}
-      isSuperLikePost={Number(currentPost.superLikeCount) > 0}
-      currentScrollIndex={currentScrollIndex}
-      handleLike={handleLike}
-      handleSuperLike={handleSuperLike}
-      handleNope={handleNope}
-      handleReload={handleReload}
-      handleScroll={handleScroll}
-    />
+    <>
+      <SwipeCardForPC
+        imageUrl={currentPost.imageUrl ?? ""}
+        name={currentPost.imageName}
+        age={Number(currentPost.imageAge)}
+        profileUrl={currentPost.user.imageUrl ?? ""}
+        userName={currentPost.user.name ?? ""}
+        userId={currentPost.user.id}
+        hashTags={currentPost.hashTags as string[]}
+        prompt={currentPost.prompt}
+        isSuperLikePost={Number(currentPost.superLikeCount) > 0}
+        currentScrollIndex={currentScrollIndex}
+        handleLike={handleLike}
+        handleSuperLike={handleSuperLike}
+        handleNope={handleNope}
+        handleReload={handleReload}
+        handleScroll={handleScroll}
+      />
+      <SwipeCardForSP
+        imageUrl={currentPost.imageUrl ?? ""}
+        name={currentPost.imageName}
+        age={Number(currentPost.imageAge)}
+        profileUrl={currentPost.user.imageUrl ?? ""}
+        userName={currentPost.user.name ?? ""}
+        userId={currentPost.user.id}
+        hashTags={currentPost.hashTags as string[]}
+        prompt={currentPost.prompt}
+        isSuperLikePost={Number(currentPost.superLikeCount) > 0}
+        currentScrollIndex={currentScrollIndex}
+        handleLike={handleLike}
+        handleSuperLike={handleSuperLike}
+        handleNope={handleNope}
+        handleReload={handleReload}
+      />
+    </>
   );
 }
 

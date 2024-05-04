@@ -153,6 +153,7 @@ export default async function Layout({
   const session = await getServerAuthSession();
   const user = session.user;
   const userId = params.userId ? params.userId : user.id;
+  
   const links = [
     {
       href: "/home",
@@ -239,7 +240,6 @@ export default async function Layout({
       ),
     },
   ];
-
   const buttons = [
     {
       text: "ログアウト",
