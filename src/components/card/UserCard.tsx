@@ -40,7 +40,6 @@ function UserCard({
           {isFollowee ? (
             <Button
               variant="following"
-              size="bold"
               font="bold"
               className="text-black-black"
               onClick={() => handleUnfollow(userId)}
@@ -51,7 +50,6 @@ function UserCard({
           ) : (
             <Button
               variant="follow"
-              size="bold"
               font="bold"
               className="text-white-white"
               onClick={() => handleFollow(userId)}

@@ -44,7 +44,6 @@ function UserItem({
         {isFollowee ? (
           <Button
             variant="following"
-            size="bold"
             font="bold"
             className="text-black-black"
             onClick={() => handleUnfollow(userId)}
@@ -55,7 +54,6 @@ function UserItem({
         ) : (
           <Button
             variant="follow"
-            size="bold"
             font="bold"
             className="text-white-white"
             onClick={() => handleFollow(userId)}

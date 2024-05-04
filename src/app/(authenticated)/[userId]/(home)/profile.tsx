@@ -80,7 +80,6 @@ export default function Profile({
       {userId !== currentUserId && isFollowee && (
         <Button
           variant="following"
-          size="bold"
           font="bold"
           className="text-black-black mt-2"
           onClick={() => unFollow(userId)}
@@ -91,7 +90,6 @@ export default function Profile({
       {userId !== currentUserId && !isFollowee && (
         <Button
           variant="follow"
-          size="bold"
           font="bold"
           className="text-white-white mt-2"
           onClick={() => follow(userId)}

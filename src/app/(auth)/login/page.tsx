@@ -1,8 +1,5 @@
 import React from "react";
 import { env } from "@/env";
-import { signIn } from "next-auth/react";
-import clsx from "clsx";
-import { Button } from "@/features/ui/button";
 import SignInForm from "@/components/auth/SignInForm";
 
 type Provider = {

@@ -14,7 +14,6 @@ export default function RemoveLikeButton({ userId, postId }: RemoveLikeButtonPro
   return (
     <Button
       variant="likeDelete"
-      size="smIcon"
       className="absolute right-1 top-1"
       onClick={() => unLike(userId, postId)}
     >

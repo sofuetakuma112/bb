@@ -122,7 +122,6 @@ export default function ProfileForm({ userId }: ProfileFormProps) {
         <Button
           type="submit"
           variant="upload"
-          size="sm"
           className="mt-6 font-semibold sm:mt-9"
         >
           設定する

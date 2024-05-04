@@ -14,7 +14,7 @@ export default async function FollowersPage({ params }: FollowersPageProps) {
   return (
     <div className="flex flex-col items-center pb-[100px] pt-5">
       {/*Todo: onClickでフォロー/アンフォロー処理を実装するならcomponentで切る*/}
-      <Button variant="ghost" size="smIcon" className="border-amber-400">
+      <Button variant="ghost" className="border-amber-400">
         <Icon name="follower-white" width="32" height="32" />
       </Button>
       <h1 className="mb-4 mt-2 h-8 w-[168px] text-center text-xl font-semibold sm:mb-8 sm:mt-4 sm:text-2xl">

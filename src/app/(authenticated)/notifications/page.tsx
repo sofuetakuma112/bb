@@ -19,7 +19,7 @@ export default async function NotificationsPage() {
 
   return (
     <div className="flex flex-col items-center pt-5">
-      <Button variant="ghost" size="smIcon" className="border-amber-400">
+      <Button variant="ghost" className="border-amber-400">
         <Icon name="notification-white" width="28" height="28" />
       </Button>
       <h1 className="mt-4 h-8 w-[168px] text-center text-xl font-semibold sm:text-2xl">

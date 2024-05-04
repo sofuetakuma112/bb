@@ -92,7 +92,6 @@ function DeletePostDialog({ postId, userId }: DeletePostDialogProps) {
           <DialogClose asChild>
             <Button
               variant="delete"
-              size="sm"
               className="m-2"
               onClick={() => deletePost(postId, userId)}
             >
@@ -100,7 +99,7 @@ function DeletePostDialog({ postId, userId }: DeletePostDialogProps) {
             </Button>
           </DialogClose>
           <DialogClose asChild>
-            <Button variant="close" size="sm" className="m-2">
+            <Button variant="close" className="m-2">
               Close
             </Button>
           </DialogClose>

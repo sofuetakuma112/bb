@@ -107,8 +107,7 @@ function SwipeCard({
         })}
       >
         <Button
-          variant="outline"
-          size="smIcon"
+          variant="smOutline"
           className="bg-white-white"
           onClick={handleReload}
         >
@@ -125,7 +124,6 @@ function SwipeCard({
       >
         <Button
           variant="ghost"
-          size="smIcon"
           className="bg-white-white"
           onClick={() => handleScroll("up")}
         >
@@ -145,7 +143,6 @@ function SwipeCard({
       >
         <Button
           variant="ghost"
-          size="smIcon"
           className="bg-white-white"
           onClick={() => handleScroll("down")}
         >
@@ -253,24 +250,21 @@ function SwipeCard({
       {/* PC */}
       <div className="absolute -bottom-8 left-1/2 hidden -translate-x-1/2 gap-x-16 sm:-bottom-12 sm:flex">
         <Button
-          variant="outline"
-          size="lgIcon"
+          variant="lgOutline"
           className="bg-white-white"
           onClick={handleNope}
         >
           <Icon name="nope" className="size-8 sm:size-16" />
         </Button>
         <Button
-          variant="outline"
-          size="lgIcon"
+          variant="lgOutline"
           className="bg-white-white"
           onClick={handleSuperLike}
         >
           <Icon name="super-like" className="size-8 sm:size-16" />
         </Button>
         <Button
-          variant="outline"
-          size="lgIcon"
+          variant="lgOutline"
           className="bg-white-white"
           onClick={handleLike}
         >
@@ -280,24 +274,21 @@ function SwipeCard({
       {/* SP */}
       <div className="absolute bottom-2 right-2 flex gap-x-2 sm:hidden">
         <Button
-          variant="outline"
-          size="smIcon"
+          variant="smOutline"
           className="bg-white-white"
           onClick={handleNope}
         >
           <Icon name="nope" className="size-6" />
         </Button>
         <Button
-          variant="outline"
-          size="smIcon"
+          variant="smOutline"
           className="bg-white-white"
           onClick={handleSuperLike}
         >
           <Icon name="super-like" className="size-6" />
         </Button>
         <Button
-          variant="outline"
-          size="smIcon"
+          variant="smOutline"
           className="bg-white-white"
           onClick={handleLike}
         >

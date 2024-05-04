@@ -151,7 +151,7 @@ export default function Upload({ userId }: UploadProps) {
               </FormItem>
             )}
           />
-          <Button type="submit" variant="upload" size="sm" className="mt-5 font-semibold sm:mt-9">
+          <Button type="submit" variant="upload" className="mt-5 font-semibold sm:mt-9">
             投稿する
           </Button>
         </form>

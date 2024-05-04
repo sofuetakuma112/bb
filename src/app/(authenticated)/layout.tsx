@@ -29,10 +29,7 @@ type LogOutDialogProps = {
   asChild?: boolean;
 };
 
-function LogOutDialog({
-  asChild = false,
-  children,
-}: LogOutDialogProps) {
+function LogOutDialog({ asChild = false, children }: LogOutDialogProps) {
   return (
     <Dialog>
       <DialogTrigger className="w-full" asChild={asChild}>
@@ -45,7 +42,7 @@ function LogOutDialog({
         <div className="flex justify-center">
           <SignOutForm />
           <DialogClose asChild>
-            <Button variant="close" size="sm" className="m-2">
+            <Button variant="close" className="m-2">
               キャンセル
             </Button>
           </DialogClose>
@@ -63,12 +60,9 @@ function LogOutDialogForPC({ className }: LogOutDialogForPCProps) {
   return (
     <LogOutDialog asChild>
       <Button
-        variant="outline"
-        size="smIcon"
-        className={clsx(
-          "hidden items-center justify-center border-0 bg-white-white sm:flex",
-          className,
-        )}
+        variant="smOutline"
+        sp="menubar"
+        className={clsx("hidden sm:flex", className)}
       >
         <Icon name="logout" width="32" height="32" />
       </Button>
@@ -164,262 +158,95 @@ export default async function Layout({
       href: "/home",
       text: "Home",
       icon: (
-        <>
-          <Button
-            variant="outline"
-            size="smIcon"
-            className="hidden items-center justify-center border-0 bg-white-white sm:flex"
-          >
-            <Icon name="home" width="28" height="28" />
-          </Button>
-          <Button
-            variant="mobileMenubar"
-            size="default"
-            className="flex flex-1 items-center justify-center border-0 bg-white-white sm:hidden"
-          >
-            <Icon name="home" className="size-6" />
-          </Button>
-        </>
+        <Button variant="smOutline" sp="menubar" className="bg-white-white">
+          <Icon name="home" className="size-6 sm:size-7" />
+        </Button>
       ),
       selectedIcon: (
-        <>
-          <Button
-            variant="outline"
-            size="smIcon"
-            className="hidden items-center justify-center border-0 bg-accent sm:flex"
-          >
-            <Icon name="home" width="28" height="28" />
-          </Button>
-          <Button
-            variant="mobileMenubar"
-            size="default"
-            className="flex flex-1 items-center justify-center border-0 bg-accent text-accent-foreground sm:hidden"
-          >
-            <Icon name="home" className="size-6" />
-          </Button>
-        </>
+        <Button variant="smOutline" sp="menubar" className="bg-accent">
+          <Icon name="home" className="size-6 sm:size-7" />
+        </Button>
       ),
     },
     {
       href: `/notifications`,
       text: "通知",
       icon: (
-        <>
-          <Button
-            variant="outline"
-            size="smIcon"
-            className="hidden items-center justify-center border-0 bg-white-white sm:flex"
-          >
-            <Icon name="notification" width="28" height="28" />
-          </Button>
-          <Button
-            variant="mobileMenubar"
-            size="default"
-            className="flex flex-1 items-center justify-center border-0 bg-white-white sm:hidden"
-          >
-            <Icon name="notification" className="size-6 sm:size-[28px]" />
-          </Button>
-        </>
+        <Button variant="smOutline" sp="menubar" className="bg-white-white">
+          <Icon name="notification" className="size-6 sm:size-[28px]" />
+        </Button>
       ),
       selectedIcon: (
-        <>
-          <Button
-            variant="outline"
-            size="smIcon"
-            className="hidden items-center justify-center border-0 bg-accent sm:flex"
-          >
-            <Icon name="notification" width="28" height="28" />
-          </Button>
-          <Button
-            variant="mobileMenubar"
-            size="default"
-            className="flex flex-1 items-center justify-center border-0 bg-accent sm:hidden"
-          >
-            <Icon name="notification" className="size-6 sm:size-[28px]" />
-          </Button>
-        </>
+        <Button variant="smOutline" sp="menubar" className="bg-accent">
+          <Icon name="notification" className="size-6 sm:size-[28px]" />
+        </Button>
       ),
     },
     {
       href: `/${userId}/following`,
       text: "フォロー一覧",
       icon: (
-        <>
-          <Button
-            variant="outline"
-            size="smIcon"
-            className="hidden items-center justify-center border-0 bg-white-white sm:flex"
-          >
-            <Icon name="follow" width="32" height="32" />
-          </Button>
-          <Button
-            variant="mobileMenubar"
-            size="default"
-            className="flex flex-1 items-center justify-center border-0 bg-white-white sm:hidden"
-          >
-            <Icon name="follow" className="size-7 sm:size-8" />
-          </Button>
-        </>
+        <Button variant="smOutline" sp="menubar" className="bg-white-white">
+          <Icon name="follow" className="size-7 sm:size-8" />
+        </Button>
       ),
       selectedIcon: (
-        <>
-          <Button
-            variant="outline"
-            size="smIcon"
-            className="hidden items-center justify-center border-0 bg-accent sm:flex"
-          >
-            <Icon name="follow" width="32" height="32" />
-          </Button>
-          <Button
-            variant="mobileMenubar"
-            size="default"
-            className="flex flex-1 items-center justify-center border-0 bg-accent sm:hidden"
-          >
-            <Icon name="follow" className="size-7 sm:size-8" />
-          </Button>
-        </>
+        <Button variant="smOutline" sp="menubar" className="bg-accent">
+          <Icon name="follow" className="size-7 sm:size-8" />
+        </Button>
       ),
     },
     {
       href: `/${userId}/followers`,
       text: "フォロワー一覧",
       icon: (
-        <>
-          <Button
-            variant="outline"
-            size="smIcon"
-            className="hidden items-center justify-center border-0 bg-white-white sm:flex"
-          >
-            <Icon name="follower" width="32" height="32" />
-          </Button>
-          <Button
-            variant="mobileMenubar"
-            size="default"
-            className="flex flex-1 items-center justify-center border-0 bg-white-white sm:hidden"
-          >
-            <Icon name="follower" className="size-7 sm:size-8" />
-          </Button>
-        </>
+        <Button variant="smOutline" sp="menubar" className="bg-white-white">
+          <Icon name="follower" className="size-7 sm:size-8" />
+        </Button>
       ),
       selectedIcon: (
-        <>
-          <Button
-            variant="outline"
-            size="smIcon"
-            className="hidden items-center justify-center border-0 bg-accent sm:flex"
-          >
-            <Icon name="follower" width="32" height="32" />
-          </Button>
-          <Button
-            variant="mobileMenubar"
-            size="default"
-            className="flex flex-1 items-center justify-center border-0 bg-accent sm:hidden"
-          >
-            <Icon name="follower" className="size-7 sm:size-8" />
-          </Button>
-        </>
+        <Button variant="smOutline" sp="menubar" className="bg-accent">
+          <Icon name="follower" className="size-7 sm:size-8" />
+        </Button>
       ),
     },
     {
       href: `/${userId}/likes`,
       text: "いいね一覧",
       icon: (
-        <>
-          <Button
-            variant="outline"
-            size="smIcon"
-            className="hidden items-center justify-center border-0 bg-white-white sm:flex"
-          >
-            <Icon name="like" width="32" height="32" />
-          </Button>
-          <Button
-            variant="mobileMenubar"
-            size="default"
-            className="flex flex-1 items-center justify-center border-0 bg-white-white sm:hidden"
-          >
-            <Icon name="like" className="size-7 sm:size-8" />
-          </Button>
-        </>
+        <Button variant="smOutline" sp="menubar" className="bg-white-white">
+          <Icon name="like" className="size-7 sm:size-8" />
+        </Button>
       ),
       selectedIcon: (
-        <>
-          <Button
-            variant="outline"
-            size="smIcon"
-            className="hidden items-center justify-center border-0 bg-accent sm:flex"
-          >
-            <Icon name="like" width="32" height="32" />
-          </Button>
-          <Button
-            variant="mobileMenubar"
-            size="default"
-            className="flex flex-1 items-center justify-center border-0 bg-accent sm:hidden"
-          >
-            <Icon name="like" className="size-7 sm:size-8" />
-          </Button>
-        </>
+        <Button variant="smOutline" sp="menubar" className="bg-accent">
+          <Icon name="like" className="size-7 sm:size-8" />
+        </Button>
       ),
     },
     {
       href: `/post`,
       text: "投稿",
       icon: (
-        <>
-          <Button
-            variant="outline"
-            size="smIcon"
-            className="hidden items-center justify-center border-0 bg-white-white sm:flex"
-          >
-            <Icon name="plus" width="32" height="32" />
-          </Button>
-          <Button
-            variant="mobileMenubar"
-            size="default"
-            className="flex flex-1 items-center justify-center border-0 bg-white-white sm:hidden"
-          >
-            <Icon name="post" className="size-7 sm:size-8" />
-          </Button>
-        </>
+        <Button variant="smOutline" sp="menubar" className="bg-white-white">
+          <Icon name="post" className="size-7 sm:size-8" />
+        </Button>
       ),
       selectedIcon: (
-        <>
-          <Button
-            variant="outline"
-            size="smIcon"
-            className="hidden items-center justify-center border-0 bg-accent sm:flex"
-          >
-            <Icon name="plus" width="32" height="32" />
-          </Button>
-          <Button
-            variant="mobileMenubar"
-            size="default"
-            className="flex flex-1 items-center justify-center border-0 bg-accent sm:hidden"
-          >
-            <Icon name="post" className="size-7 sm:size-8" />
-          </Button>
-        </>
+        <Button variant="smOutline" sp="menubar" className="bg-accent">
+          <Icon name="post" className="size-7 sm:size-8" />
+        </Button>
       ),
     },
   ];
 
   const buttons = [
     {
-      href: "#logout",
       text: "ログアウト",
       icon: (
         <>
-          <LogOutDialogForPC className="hidden sm:flex" />
+          <LogOutDialogForPC className="bg-white-white" />
           <UserIconMenu profileUrl={user.image} userId={userId} />
-        </>
-      ),
-      selectedIcon: (
-        <>
-          <LogOutDialogForPC className="hidden bg-accent sm:flex" />
-          <UserIconMenu
-            profileUrl={user.image}
-            userId={userId}
-            className="bg-accent"
-          />
         </>
       ),
     },

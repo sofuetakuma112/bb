@@ -13,7 +13,7 @@ export default async function LikesPage({ params }: LikePageProps) {
   return (
     <div className="flex flex-col items-center pb-[100px] pt-5">
       {/*Todo: onClickでフォロー/アンフォロー処理を実装するならcomponentで切る*/}
-      <Button variant="ghost" size="smIcon" className="border-amber-400">
+      <Button variant="ghost" className="border-amber-400">
         <Icon name="like-white" width="28" height="28" />
       </Button>
       <h1 className="mt-4 h-8 w-[168px] text-center text-2xl font-semibold">
