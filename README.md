@@ -12,9 +12,6 @@
 - [Jotai](https://jotai.org/)
 - [zod](https://zod.dev/)
 
-## もっと学ぶ
-[T3 Stack](https://create.t3.gg/) についてもっと学ぶために、以下のリソースをご覧ください:
-
 ## ドキュメント
 [T3スタック](https://create.t3.gg/)についてもっと知るには、以下のリソースを見てください：
 
